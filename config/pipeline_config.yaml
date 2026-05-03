@@ -1,0 +1,14 @@
+input:
+  accounts: /data/input/accounts.csv
+  customers: /data/input/customers.csv
+  transactions: /data/input/transactions.jsonl
+
+output:
+  bronze: /data/output/bronze
+  silver: /data/output/silver
+  gold: /data/output/gold
+
+spark:
+  app_name: nedbank-data-engineering-challenge
+  master: local[2]
+  shuffle_partitions: 4

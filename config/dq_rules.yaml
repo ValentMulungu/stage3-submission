@@ -1,0 +1,38 @@
+stage: "2"
+
+dq_rules:
+  DUPLICATE_DEDUPED:
+    issue_type: "duplicate_transactions"
+    affected_file: "transactions"
+    detection: "duplicate transaction_id with one retained"
+    handling_action: "DEDUPLICATED_KEEP_FIRST"
+
+  ORPHANED_ACCOUNT:
+    issue_type: "orphaned_transactions"
+    affected_file: "transactions"
+    detection: "transactions.account_id has no match in accounts.account_id"
+    handling_action: "QUARANTINED"
+
+  TYPE_MISMATCH:
+    issue_type: "amount_type_mismatch"
+    affected_file: "transactions"
+    detection: "amount exists but cast to DECIMAL(18,2) fails"
+    handling_action: "CAST_TO_DECIMAL"
+
+  DATE_FORMAT:
+    issue_type: "date_format_inconsistency"
+    affected_file: "multiple"
+    detection: "date values require parsing from non-ISO formats"
+    handling_action: "NORMALISED_DATE"
+
+  CURRENCY_VARIANT:
+    issue_type: "currency_variants"
+    affected_file: "transactions"
+    detection: "currency not already standardised to ZAR"
+    handling_action: "NORMALISED_CURRENCY"
+
+  NULL_REQUIRED:
+    issue_type: "null_account_id"
+    affected_file: "accounts"
+    detection: "account_id is null or blank"
+    handling_action: "EXCLUDED_NULL_PK"
